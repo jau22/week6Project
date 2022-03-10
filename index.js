@@ -21,88 +21,11 @@ class Players{
     }
 }
 
-// distribute values using loop.
 let my = new Players();
 let cpu = new Players();
 
+// distribute values using loop.
 
-let cardDeck = [];
-for (i = 0; i < 52; i++){
-    switch (i%13){
-        case 0:
-            cardDeck.push(new Cards(i,1,'Ace'));
-            break;
-        case 1:
-            cardDeck.push(new Cards(i,2,'2'));
-            break;
-        case 2:
-            cardDeck.push(new Cards(i,3,'3'));
-            break;
-        case 3:
-            cardDeck.push(new Cards(i,4,'4'));
-            break; 
-        case 4:
-            cardDeck.push(new Cards(i,5,'5'));
-            break;
-        case 5:
-            cardDeck.push(new Cards(i,6,'6'));
-            break;
-        case 6:
-            cardDeck.push(new Cards(i,7,'7'));
-            break;
-        case 7:
-            cardDeck.push(new Cards(i,8,'8'));
-            break;
-        case 8:
-            cardDeck.push(new Cards(i,9,'9'));
-            break;
-        case 9:
-            cardDeck.push(new Cards(i,10,'10'));
-            break;
-        case 10:
-            cardDeck.push(new Cards(i,11,'Jack'));
-            break;
-        case 11:
-            cardDeck.push(new Cards(i,12,'Queen'));
-            break;
-        case 12:
-            cardDeck.push(new Cards(i,13,'King'));
-            break;
-    }
-}
-
-for(i = 0; i < 52 ; i++){
-    switch(i%4){
-        case 0:
-            cardDeck[i].symbol = 'Spade';
-            break;
-        case 1:
-            cardDeck[i].symbol = 'Heart';           
-            break;
-        case 2:
-            cardDeck[i].symbol = 'Club';            
-            break;
-        case 3:
-            cardDeck[i].symbol = 'Diamond';          
-            break;
-    }
-}
-
-//Distribute Deck to Players
-
-let rand;
-
-for(i = 0; i < 52;i++){
-        rand = Math.floor(Math.random()*(52-i));
-    
-    if (i%2){
-        my.deck.push(cardDeck[rand]);   
-        cardDeck.splice(rand,1);
-    } else {
-        cpu.deck.push(cardDeck[rand]);
-        cardDeck.splice(rand,1);
-    }
-}
 
 class Menu{
     constructor(){
@@ -111,30 +34,32 @@ class Menu{
 
 //Create Function that would number of rounds. 
     start(){
+        
+
         let selection = this.runOpeningScreen();
 
         while (selection !=0){
             if (selection === null){
-                alert ('Game Over')
+                alert ('Thak you for Playing')
                 return;
             }
             
             switch(selection){
                 case'1':
+                    this.newGame();
                     this.drawCard();
                     break;
-             /*   case '2':
+                case '2':
                     this.readRules();
-                    break;  This is very buggy */
-                case'0':
-                    selection = 0;
                     break;
                 default:
-                    break;
+                    selection = 0;
             }
-            this.runOpeningScreen();
+            selection = this.runOpeningScreen();
         } 
+        alert ('Thank you for Playing');
     }
+
 
     runOpeningScreen(){
         return prompt(`
@@ -144,39 +69,200 @@ class Menu{
         `)
     };
 
- /*   readRules(){
-        return prompt(`
-        The players plays a card each round, the player who played the higher card is awarded a point. Tie results in no points for either player. The player with the highest point in the end wins.
-        1)OK
-        `     
+
+
+
+   readRules(){
         alert("The players plays a card each round, the player who played the higher card is awarded a point. Tie results in no points for either player. The player with the highest point in the end wins.");
-        selection = this.runOpeningScreen();
-    }   */
+    } 
 
-    //Create function that would increase round
 
-    
+
+    newGame(){
+
+        this.round = 0;
+        my.points = 0;
+        cpu.points = 0;
+
+        let cardDeck = [];
+        for (let i = 0; i < 52; i++){
+            switch (i%13){
+                case 0:
+                    cardDeck.push(new Cards(i,1,'Ace'));
+                    break;
+                case 1:
+                    cardDeck.push(new Cards(i,2,'2'));
+                    break;
+                case 2:
+                    cardDeck.push(new Cards(i,3,'3'));
+                    break;
+                case 3:
+                    cardDeck.push(new Cards(i,4,'4'));
+                    break; 
+                case 4:
+                    cardDeck.push(new Cards(i,5,'5'));
+                    break;
+                case 5:
+                    cardDeck.push(new Cards(i,6,'6'));
+                    break;
+                case 6:
+                    cardDeck.push(new Cards(i,7,'7'));
+                    break;
+                case 7:
+                    cardDeck.push(new Cards(i,8,'8'));
+                    break;
+                case 8:
+                    cardDeck.push(new Cards(i,9,'9'));
+                    break;
+                case 9:
+                    cardDeck.push(new Cards(i,10,'10'));
+                    break;
+                case 10:
+                    cardDeck.push(new Cards(i,11,'Jack'));
+                    break;
+                case 11:
+                    cardDeck.push(new Cards(i,12,'Queen'));
+                    break;
+                case 12:
+                    cardDeck.push(new Cards(i,13,'King'));
+                    break;
+            }
+        }
+
+        for(let i = 0; i < 52 ; i++){
+            switch(i%4){
+                case 0:
+                    cardDeck[i].symbol = 'Spade';
+                    break;
+                case 1:
+                    cardDeck[i].symbol = 'Heart';           
+                    break;
+                case 2:
+                    cardDeck[i].symbol = 'Club';            
+                    break;
+                case 3:
+                    cardDeck[i].symbol = 'Diamond';          
+                    break;
+            }
+        }
+
+        //Distribute Deck to Players
+
+        let rand;
+
+        for(let i = 0; i < 52;i++){
+                rand = Math.floor(Math.random()*(52-i));
+            
+            if (i%2){
+                my.deck.push(cardDeck[rand]);   
+                cardDeck.splice(rand,1);
+            } else {
+                cpu.deck.push(cardDeck[rand]);
+                cardDeck.splice(rand,1);
+            }
+        }
+    }
+
+    //
 
     drawCard(){
-       console.log("Round" + this.round); 
-       this.myRandom = Math.floor(Math.random()*(my.deck.length));
-       this.cpuRandom = Math.floor(Math.random()*(cpu.deck.length));
+        this.myRandom = Math.floor(Math.random()*(my.deck.length));
+        this.cpuRandom = Math.floor(Math.random()*(cpu.deck.length));
 
-       let myCardName = `${my.deck[this.myRandom].name} of ${my.deck[this.myRandom].symbol}`
-       let cpuCardName = `${cpu.deck[this.cpuRandom].name} of ${cpu.deck[this.cpuRandom].symbol}`
+        this.myCardName = `${my.deck[this.myRandom].name} of ${my.deck[this.myRandom].symbol}`
+        this.cpuCardName = `${cpu.deck[this.cpuRandom].name} of ${cpu.deck[this.cpuRandom].symbol}`
 
-       console.log("Cards" + my.deck.length);
-       if (my.deck[this.myRandom].value === cpu.deck[this.cpuRandom].value){
-           console.log ("Tie")
-       } else if (my.deck[this.myRandom].value > cpu.deck[this.cpuRandom].value){
-            my.points++;   
-            console.log ('You won with a ' + myCardName + ' against ' + cpuCardName + '! You have ' + my.points);
-       }
+        let description = '';
+        let endDescription = '';
+
+    
+        if (my.deck[this.myRandom].value === cpu.deck[this.cpuRandom].value){
+                description = `Round ${this.round + 1}: Tie
+                    You: ${this.myCardName}, ${my.points} points
+                    CPU: ${this.cpuCardName}, ${cpu.points} points
+                    `
+            } else if (my.deck[this.myRandom].value > cpu.deck[this.cpuRandom].value){
+                my.points++;
+                description = `Round ${this.round + 1}: You Won
+                    You: ${this.myCardName}, ${my.points} points
+                    CPU: ${this.cpuCardName}, ${cpu.points} points
+                    `   
+            } else if (my.deck[this.myRandom].value < cpu.deck[this.cpuRandom].value){
+                cpu.points++;
+                description = `Round ${this.round + 1}: You Lost
+                    You: ${this.myCardName}, ${my.points} points
+                    CPU: ${this.cpuCardName}, ${cpu.points} points
+                    `
+                }
+
        my.deck.splice(this.myRandom,1);
        cpu.deck.splice(this.cpuRandom,1);
        this.round++;
+
+
+        let selection = this.summary(description);
+
+
+// if card in deck = 0...
+
+        if (my.deck.length === 0){
+            if(my.points > cpu.points){
+                endDescription = `You win with ${my.points} points`
+            } else if (my.points < cpu.points){
+                endDescription = `CPU wins with ${cpu.points} points`
+            } else if (my.points === cpu.points){
+                endDescription = `You tied with the CPU`
+            };
+
+
+            selection = this.endSummary(endDescription)
+
+            while (selection != 0){
+                return;
+            }
+        } else {
+
+            while (selection != 0){
+                if (selection === null){
+                    alert ('You left the game')
+                    return;
+                }
+                
+                switch(selection){
+                    case'1':
+                        this.drawCard();
+                        return;
+                        break;
+                    case'0':
+                        selection = 0; 
+                        var quit = true   
+                        alert ('You left the game');
+                        return;     
+                    // this.start();
+                        break;
+                    default:
+                        selection = 0;    
+                        return;
+                }
+            }    
+        }
     }
 
+    summary(description){
+        return prompt(`
+        ${description}
+        ------
+        1) Next
+        0) Leave 
+        `
+        );
+    }
+    
+    endSummary(description){
+        alert (`
+        ${description}
+        `);
+    }
 
 
 }
