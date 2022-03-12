@@ -6,8 +6,6 @@ class Cards {
         this.name = name;
         this.symbol = symbol;
     };
-
-    //calledName = `${this.name} of ${this.symbol}`;
    
     defineCard(){
         console.log(this.value + this.name + this.index + this.symbol)
@@ -24,9 +22,6 @@ class Players{
 let my = new Players();
 let cpu = new Players();
 
-// distribute values using loop.
-
-
 class Menu{
     constructor(){
         this.round = 0;
@@ -34,8 +29,6 @@ class Menu{
 
 //Create Function that would number of rounds. 
     start(){
-        
-
         let selection = this.runOpeningScreen();
 
         while (selection !=0){
@@ -60,7 +53,6 @@ class Menu{
         alert ('Thank you for Playing');
     }
 
-
     runOpeningScreen(){
         return prompt(`
         1)Start Game
@@ -69,14 +61,9 @@ class Menu{
         `)
     };
 
-
-
-
    readRules(){
         alert("The players plays a card each round, the player who played the higher card is awarded a point. Tie results in no points for either player. The player with the highest point in the end wins.");
     } 
-
-
 
     newGame(){
 
@@ -195,10 +182,10 @@ class Menu{
                     `
                 }
 
-       my.deck.splice(this.myRandom,1);
-       cpu.deck.splice(this.cpuRandom,1);
-       this.round++;
-
+        my.deck.splice(this.myRandom,1);
+        cpu.deck.splice(this.cpuRandom,1);
+        this.round++;
+        console.log(my.deck.length);
 
         let selection = this.summary(description);
 
@@ -213,21 +200,16 @@ class Menu{
             } else if (my.points === cpu.points){
                 endDescription = `You tied with the CPU`
             };
-
-
-            selection = this.endSummary(endDescription)
-
+            selection = this.endSummary(endDescription);
             while (selection != 0){
                 return;
-            }
+                }
         } else {
-
             while (selection != 0){
                 if (selection === null){
                     alert ('You left the game')
                     return;
-                }
-                
+                }               
                 switch(selection){
                     case'1':
                         this.drawCard();
@@ -254,8 +236,7 @@ class Menu{
         ------
         1) Next
         0) Leave 
-        `
-        );
+        `);
     }
     
     endSummary(description){
@@ -263,8 +244,6 @@ class Menu{
         ${description}
         `);
     }
-
-
 }
 
 let war = new Menu();
